@@ -1,0 +1,557 @@
+<title>여름방학 공부 계획표 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F9F8;
+    --surface: #FFFFFF;
+    --teal: #1F7A6E;
+    --teal-light: #E0F0EE;
+    --teal-mid: #3A9E90;
+    --amber: #E8912A;
+    --amber-light: #FEF3E2;
+    --coral: #E05A5A;
+    --coral-light: #FDEAEA;
+    --violet: #6B5EA8;
+    --violet-light: #EEEAF8;
+    --green: #3E8C5F;
+    --green-light: #E4F3EB;
+    --gray: #8A9299;
+    --gray-light: #F0F2F1;
+    --text: #1A2620;
+    --text-mid: #4A5550;
+    --text-soft: #8A9299;
+    --border: #DCE4E1;
+    --weekend: #F5F0FA;
+    --today: #FFF8EE;
+  }
+
+  body {
+    font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 32px 20px 60px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal-mid);
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: clamp(26px, 5vw, 38px);
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  .header h1 span {
+    color: var(--teal);
+  }
+  .header .sub {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+
+  /* ── LAYOUT ── */
+  .main-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 760px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .card-header .month-label {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .card-header .year-label {
+    font-size: 13px;
+    color: var(--text-soft);
+    font-weight: 500;
+  }
+  .card-header .badge {
+    margin-left: auto;
+    background: var(--teal-light);
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── CALENDAR GRID ── */
+  .cal-body { padding: 16px 18px 20px; }
+  .cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .cal-weekdays span {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-soft);
+    padding-bottom: 6px;
+  }
+  .cal-weekdays span.sun { color: var(--coral); }
+  .cal-weekdays span.sat { color: var(--violet); }
+
+  .cal-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+  .day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-mid);
+    position: relative;
+    cursor: default;
+    transition: background 0.15s;
+  }
+  .day.empty { background: transparent; }
+  .day.vacation {
+    background: var(--teal-light);
+    color: var(--teal);
+    font-weight: 600;
+  }
+  .day.sun { color: var(--coral); }
+  .day.sat { color: var(--violet); }
+  .day.vacation.sun { background: var(--coral-light); color: var(--coral); }
+  .day.vacation.sat { background: var(--violet-light); color: var(--violet); }
+  .day.special {
+    background: var(--amber) !important;
+    color: #fff !important;
+    font-weight: 700;
+  }
+  .day .dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--amber);
+    position: absolute;
+    bottom: 4px;
+  }
+  .day.vacation .dot { background: var(--teal); }
+  .day-num { font-variant-numeric: tabular-nums; line-height: 1; }
+  .day .tag {
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .day.special .tag { color: rgba(255,255,255,0.85); }
+
+  /* ── DAILY SCHEDULE ── */
+  .schedule-wrap {
+    grid-column: 1 / -1;
+  }
+  .schedule-card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .schedule-header {
+    padding: 20px 26px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .schedule-header h2 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text);
+  }
+  .schedule-header .desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    margin-left: auto;
+  }
+
+  .timetable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .timetable thead th {
+    padding: 10px 14px;
+    background: var(--gray-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .timetable thead th:first-child { text-align: left; width: 90px; }
+  .timetable tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+    color: var(--text-mid);
+    font-weight: 500;
+  }
+  .timetable tbody td:first-child {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-soft);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .timetable tbody tr:last-child td { border-bottom: none; }
+  .timetable tbody tr:hover td { background: var(--bg); }
+
+  .chip {
+    display: inline-block;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .chip.korean   { background: var(--teal-light);   color: var(--teal); }
+  .chip.math     { background: var(--amber-light);  color: var(--amber); }
+  .chip.english  { background: var(--violet-light); color: var(--violet); }
+  .chip.subject  { background: var(--green-light);  color: var(--green); }
+  .chip.rest     { background: var(--gray-light);   color: var(--gray); }
+  .chip.explore  { background: var(--coral-light);  color: var(--coral); }
+
+  /* ── TIPS SECTION ── */
+  .tips-wrap {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 0;
+  }
+  @media (max-width: 680px) {
+    .tips-wrap { grid-template-columns: 1fr; }
+  }
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .tip-card .tip-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .tip-card .tip-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .tip-card .tip-body {
+    font-size: 12.5px;
+    color: var(--text-soft);
+    line-height: 1.65;
+  }
+  .tip-card .tip-body strong { color: var(--text-mid); }
+
+  /* ── LEGEND ── */
+  .legend {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 0 4px;
+  }
+  .legend-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-soft);
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-mid);
+    font-weight: 500;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+</style>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="eyebrow">2026 여름방학 · 초등교육학과 준비</div>
+  <h1>방학 <span>공부 계획표</span></h1>
+  <div class="sub">7월 19일 ~ 8월 23일 · 5주 6일</div>
+</div>
+
+<div class="main-grid">
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <span class="legend-title">범례</span>
+    <div class="legend-item"><div class="legend-dot" style="background:#E0F0EE;border:1.5px solid #3A9E90"></div>방학 기간</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E8912A"></div>특별 이벤트</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#FDEAEA;border:1.5px solid #E05A5A"></div>일요일</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EEEAF8;border:1.5px solid #6B5EA8"></div>토요일</div>
+  </div>
+
+  <!-- JULY CALENDAR -->
+  <div class="card">
+    <div class="card-header">
+      <span class="month-label">7월</span>
+      <span class="year-label">July 2026</span>
+      <span class="badge">방학 시작</span>
+    </div>
+    <div class="cal-body">
+      <div class="cal-weekdays">
+        <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span>
+      </div>
+      <div class="cal-days" id="july"></div>
+    </div>
+  </div>
+
+  <!-- AUGUST CALENDAR -->
+  <div class="card">
+    <div class="card-header">
+      <span class="month-label">8월</span>
+      <span class="year-label">August 2026</span>
+      <span class="badge">개학 준비</span>
+    </div>
+    <div class="cal-body">
+      <div class="cal-weekdays">
+        <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span>
+      </div>
+      <div class="cal-days" id="august"></div>
+    </div>
+  </div>
+
+  <!-- DAILY TIMETABLE -->
+  <div class="schedule-wrap">
+    <div class="schedule-card">
+      <div class="schedule-header">
+        <h2>하루 시간표</h2>
+        <span class="desc">평일 기준 · 주말은 자유 시간 +1시간</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="timetable">
+          <thead>
+            <tr>
+              <th>시간</th>
+              <th>1주차</th>
+              <th>2주차</th>
+              <th>3주차</th>
+              <th>4주차</th>
+              <th>5주차</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07:00–08:00</td>
+              <td colspan="5"><span class="chip rest">기상 · 아침식사 · 준비</span></td>
+            </tr>
+            <tr>
+              <td>08:00–10:00</td>
+              <td><span class="chip korean">국어</span></td>
+              <td><span class="chip korean">국어</span></td>
+              <td><span class="chip korean">국어</span></td>
+              <td><span class="chip korean">국어</span></td>
+              <td><span class="chip korean">국어</span></td>
+            </tr>
+            <tr>
+              <td>10:00–12:00</td>
+              <td><span class="chip math">수학</span></td>
+              <td><span class="chip math">수학</span></td>
+              <td><span class="chip math">수학</span></td>
+              <td><span class="chip math">수학</span></td>
+              <td><span class="chip math">수학</span></td>
+            </tr>
+            <tr>
+              <td>12:00–13:30</td>
+              <td colspan="5"><span class="chip rest">점심 · 휴식</span></td>
+            </tr>
+            <tr>
+              <td>13:30–15:00</td>
+              <td><span class="chip english">영어</span></td>
+              <td><span class="chip english">영어</span></td>
+              <td><span class="chip english">영어</span></td>
+              <td><span class="chip english">영어</span></td>
+              <td><span class="chip english">영어</span></td>
+            </tr>
+            <tr>
+              <td>15:00–16:30</td>
+              <td><span class="chip subject">사회·윤리</span></td>
+              <td><span class="chip subject">심리학 예습</span></td>
+              <td><span class="chip subject">사회·윤리</span></td>
+              <td><span class="chip subject">심리학 예습</span></td>
+              <td><span class="chip subject">총 복습</span></td>
+            </tr>
+            <tr>
+              <td>16:30–17:00</td>
+              <td colspan="5"><span class="chip rest">휴식 · 간식</span></td>
+            </tr>
+            <tr>
+              <td>17:00–18:30</td>
+              <td><span class="chip explore">탐구활동</span></td>
+              <td><span class="chip explore">봉사 기록</span></td>
+              <td><span class="chip explore">탐구보고서</span></td>
+              <td><span class="chip explore">세특 정리</span></td>
+              <td><span class="chip explore">자기소개서 초안</span></td>
+            </tr>
+            <tr>
+              <td>18:30–21:00</td>
+              <td colspan="5"><span class="chip rest">저녁 · 자유시간</span></td>
+            </tr>
+            <tr>
+              <td>21:00–22:30</td>
+              <td><span class="chip korean">독서 30분 + 오답 정리</span></td>
+              <td><span class="chip math">수학 오답 노트</span></td>
+              <td><span class="chip english">영어 단어 암기</span></td>
+              <td><span class="chip subject">내일 계획 세우기</span></td>
+              <td><span class="chip rest">가볍게 복습</span></td>
+            </tr>
+            <tr>
+              <td>22:30–</td>
+              <td colspan="5"><span class="chip rest">취침 준비</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-wrap">
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--teal-light)">📚</div>
+      <div class="tip-title">국어·영어 전략</div>
+      <div class="tip-body">매일 오전 집중 투자. <strong>문학 작품 1편</strong>씩 읽고 세특용 감상 메모 남기기. 영어는 단어 20개 + 지문 1개 루틴 유지.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--amber-light)">🔬</div>
+      <div class="tip-title">탐구활동 목표</div>
+      <div class="tip-body">방학 중 <strong>탐구 보고서 1편</strong> 완성 목표. 아동 발달·교육 관련 주제로 작성하면 2학기 세특에 바로 활용 가능.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--violet-light)">🎯</div>
+      <div class="tip-title">방학 마무리 체크</div>
+      <div class="tip-body">8월 4주차에 <strong>2학기 예습 + 오답 총정리</strong>. 개학 1주 전엔 수면 패턴을 학기 중으로 맞춰두기.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // July 2026: July 1 = Wednesday (day index 3)
+  // August 2026: August 1 = Saturday (day index 6)
+
+  const VACATION_START = { m: 7, d: 19 };
+  const VACATION_END   = { m: 8, d: 23 };
+
+  const SPECIALS = {
+    '7-19': '방학 시작',
+    '8-1':  '광복절 전날',
+    '8-15': '광복절',
+    '8-17': '개학 준비',
+    '8-23': '개학'
+  };
+
+  function isVacation(m, d) {
+    if (m === 7 && d >= 19) return true;
+    if (m === 8 && d <= 23) return true;
+    return false;
+  }
+
+  function buildCal(containerId, year, month, firstDow, totalDays) {
+    const el = document.getElementById(containerId);
+    // blank cells before first day
+    for (let i = 0; i < firstDow; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'day empty';
+      el.appendChild(blank);
+    }
+    for (let d = 1; d <= totalDays; d++) {
+      const dow = (firstDow + d - 1) % 7;
+      const vac = isVacation(month, d);
+      const key = `${month}-${d}`;
+      const isSpecial = SPECIALS[key];
+
+      const cell = document.createElement('div');
+      let cls = 'day';
+      if (vac) cls += ' vacation';
+      if (dow === 0) cls += ' sun';
+      if (dow === 6) cls += ' sat';
+      if (isSpecial) cls += ' special';
+      cell.className = cls;
+
+      const num = document.createElement('div');
+      num.className = 'day-num';
+      num.textContent = d;
+      cell.appendChild(num);
+
+      if (isSpecial) {
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.textContent = isSpecial;
+        cell.appendChild(tag);
+      }
+
+      el.appendChild(cell);
+    }
+  }
+
+  // July 2026: 1st = Wednesday = index 3, 31 days
+  buildCal('july',   2026, 7, 3, 31);
+  // August 2026: 1st = Saturday = index 6, 31 days
+  buildCal('august', 2026, 8, 6, 31);
+</script>
